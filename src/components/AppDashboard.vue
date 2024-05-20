@@ -100,6 +100,8 @@ watch(selectedDeadline, (newValue) => {
           <v-card data-testid="task-modal" class="overflow-visible" title="Create New Task">
             <v-card-text>
               <v-form @submit.prevent="createTask">
+
+<!--                Miesto tejto poznámky by som za normalnych okolnosti použil aletr-->
                 <div>Fill in all fields and set the deadline in the future</div>
 
                 <v-text-field v-model="newTask.title" label="Title"></v-text-field>
