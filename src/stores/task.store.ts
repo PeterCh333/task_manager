@@ -8,6 +8,7 @@ export const useTaskStore = defineStore('task', {
     selectedTask: null as Task | null,
   }),
   actions: {
+    // Vyberieme task pre zobrazenie na základe id, ak nemáme id vyberieme prvý task v zozname a ak je zoznam prazdny setneme null
     async selectTask(id?: string) {
       if (id) {
         const task = this.tasks.find(task => task.id === id);
@@ -42,6 +43,7 @@ export const useTaskStore = defineStore('task', {
     async updateTask(task: Task) {
       await updateTask(task);
       const index = this.tasks.findIndex(t => t.id === task.id);
+
       if (index !== -1) {
         this.tasks[index] = task;
       }

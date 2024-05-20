@@ -33,7 +33,7 @@ function activateTask(task: Task) {
   store.updateTask(task);
 }
 
-//Vieme komponent sa nezobrazí ak nemáme task takže nemôže byť null čiže môžeme použiť !
+//Vieme že komponent sa nezobrazí ak nemáme task takže nemôže byť null čiže môžeme použiť !
 async function deleteTask() {
   await store.removeTask(props.task!.id);
   await store.selectTask()
@@ -42,8 +42,7 @@ async function deleteTask() {
 </script>
 
 <template>
-  <v-card class="w-100" v-if="props.task">
-
+  <v-card class="w-100 ml-5" v-if="props.task">
     <v-card-title>{{ props.task.title }} </v-card-title>
     <v-card-text>
       <div>Description: {{ props.task.description }}</div>

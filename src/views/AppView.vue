@@ -6,11 +6,8 @@ import NavBar from '@/components/NavBar.vue'
 <template>
   <nav-bar title="TASK MANAGER"></nav-bar>
   <router-view/>
-
 </template>
 
 <style scoped>
-
-
 
 </style>

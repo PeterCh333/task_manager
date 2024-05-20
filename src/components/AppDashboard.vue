@@ -41,6 +41,19 @@ const validations = {
 
 const v$ = useVuelidate(validations, { newTask });
 
+const createTask = () => {
+  if (v$.value.$invalid) {
+    console.error('Form is invalid');
+    return;
+  }
+  //Tieto hodnoty by sme za normálnych okolností nastavili na backende
+  newTask.value.createdAt = new Date().toISOString();
+  newTask.value.updatedAt = new Date().toISOString();
+
+  store.createTask(newTask.value);
+  closeDialog();
+};
+
 const openDialog = () => {
   setNewTaskDefaultValues();
   dialog.value = true;
@@ -53,19 +66,6 @@ const closeDialog = () => {
 
 const setNewTaskDefaultValues = () => {
   newTask.value = { ...defaultTask };
-};
-
-const createTask = () => {
-  newTask.value.createdAt = new Date().toISOString();
-  newTask.value.updatedAt = new Date().toISOString();
-
-  if (v$.value.$invalid) {
-    console.error('Form is invalid');
-    return;
-  }
-
-  store.createTask(newTask.value);
-  closeDialog();
 };
 
 watch(selectedDeadline, (newValue) => {
@@ -81,7 +81,7 @@ watch(selectedDeadline, (newValue) => {
         <task-component :task="store.selectedTask"></task-component>
       </div>
 
-      <div class="pa-4  text-center">
+      <div class="pa-4 text-center">
         <v-dialog v-model="dialog" max-width="600">
           <template v-slot:activator="{ props: activatorProps }">
             <v-btn

@@ -44,16 +44,22 @@ describe('Dashboard Component', () => {
   it('filters tasks based on search query', () => {
     cy.get('input[placeholder="Search"]').type('Test');
     cy.contains('.task-list', 'Test').should('exist');
-    cy.contains('.task-list', 'Not exist').should('not.exist'); // Assuming "Another Task" is not matching the search query
+
+    cy.contains('.task-list', 'Not exist').should('not.exist');
   });
 
   it('filters tasks based on active filter', () => {
     cy.contains('.v-chip', 'Active').click();
+
     cy.contains('.task-list', 'Active',).should('exist');
+
     cy.contains('.task-list', 'Completed').should('not.exist');
   });
 
   it('marks a task as completed', () => {
+    cy.contains('.v-chip', 'Active').click();
+    cy.contains('.v-container', 'Test task').should('exist').click()
+
     cy.contains('.v-btn', 'mark as complete').click();
 
     cy.contains('.v-card-text', 'Completed').should('exist');
@@ -72,6 +78,7 @@ describe('Dashboard Component', () => {
   });
 
   it('deletes a task', () => {
+    cy.contains('.v-container', 'Test task').should('exist').click()
     cy.get('.v-btn').contains('Delete').click();
 
     cy.contains('.task-list', 'Test task').should('not.exist');

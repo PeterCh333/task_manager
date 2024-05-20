@@ -4,7 +4,7 @@
         <v-text-field v-model="searchQuery" placeholder="Search" @input="searchAndFilter"></v-text-field>
     </v-list-item>
 
-    <v-chip-group v-model="selectedFilter">
+    <v-chip-group class="ml-5" v-model="selectedFilter">
       <v-chip v-for="(filter, index) in filters" :key="index" :value="filter" @input="searchAndFilter">{{ filter }}</v-chip>
     </v-chip-group>
 
@@ -70,10 +70,10 @@ watch(selectedFilter, () => {
   height: 700px;
   overflow-y: auto;
   min-width: 360px;
+
 }
 
 .task-list {
   width: 100%;
-
 }
 </style>

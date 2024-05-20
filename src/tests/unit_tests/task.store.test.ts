@@ -4,24 +4,15 @@ import { createPinia } from 'pinia'
 
 const pinia = createPinia();
 const taskStore = useTaskStore(pinia);
-const testTaskPayload = {
-  createdAt: "2024-05-14T00:33:58.139Z",
-  updatedAt: "2024-05-13T18:48:50.762Z",
-  deadline: "2024-10-09T18:15:38.749Z",
-  description: "This is a new task description",
-  status: 'active',
-  title: "Test task",
-  createdByUserId: "1",
-  id: ''
-};
+import taskTestPayload from '@/tests/unit_tests/taskTestPayload'
+
 
 describe('Task Store', () => {
   it('creates a task in store', async () => {
-    await taskStore.createTask(testTaskPayload);
-    testTaskPayload.id = taskStore.tasks[0].id;
+    await taskStore.createTask(taskTestPayload);
+    taskTestPayload.id = taskStore.tasks[0].id;
 
-    expect(taskStore.tasks[0].id).toContainEqual(testTaskPayload.id);
-
+    expect(taskStore.tasks[0].id).toContainEqual(taskTestPayload.id);
   });
 
   it('fetches tasks and updates store', async () => {
@@ -32,16 +23,16 @@ describe('Task Store', () => {
 
   it('updates a task in store', async () => {
 
-    const updatedTaskData = { ...testTaskPayload, title: "Updated Task Title" };
+    const updatedTaskData = { ...taskTestPayload, title: "Updated Task Title" };
     await taskStore.updateTask(updatedTaskData);
 
-    expect(taskStore.tasks.find(task => task.id === testTaskPayload.id)?.title).toEqual(updatedTaskData.title);
+    expect(taskStore.tasks.find(task => task.id === taskTestPayload.id)?.title).toEqual(updatedTaskData.title);
   });
 
   it('deletes a task from store', async () => {
 
-    await taskStore.removeTask(testTaskPayload.id);
+    await taskStore.removeTask(taskTestPayload.id);
 
-    expect(taskStore.tasks.find(task => task.id === testTaskPayload.id)).toBeUndefined();
+    expect(taskStore.tasks.find(task => task.id === taskTestPayload.id)).toBeUndefined();
   });
 });
