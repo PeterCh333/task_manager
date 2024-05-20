@@ -100,12 +100,14 @@ watch(selectedDeadline, (newValue) => {
           <v-card data-testid="task-modal" class="overflow-visible" title="Create New Task">
             <v-card-text>
               <v-form @submit.prevent="createTask">
+                <div>Fill in all fields and set the deadline in the future</div>
+
                 <v-text-field v-model="newTask.title" label="Title"></v-text-field>
                 <v-text-field v-model="newTask.description" label="Description"></v-text-field>
 
                 <!-- Musel som použiť vue datepicker pretože vuetify timepicker nefungoval-->
                 <div>
-                  <label class="date-picker-label">Select Deadline</label>
+                  <label class="date-picker-label">Deadline</label>
                   <VueDatePicker v-model="selectedDeadline" data-testid="date-picker"/>
                 </div>
               </v-form>

@@ -28,7 +28,7 @@ import { ref, watch } from 'vue'
 
 const store = useTaskStore()
 
-const filters = ['All', 'Active', 'Completed'];
+const filters = ['Active', 'Completed'];
 
 const searchQuery = ref('')
 const selectedFilter = ref('All');
