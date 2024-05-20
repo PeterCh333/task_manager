@@ -58,6 +58,7 @@ describe('Dashboard Component', () => {
 
   it('marks a task as completed', () => {
     cy.contains('.v-chip', 'Active').click();
+
     cy.contains('.v-container', 'Test task').should('exist').click()
 
     cy.contains('.v-btn', 'mark as complete').click();
@@ -67,7 +68,9 @@ describe('Dashboard Component', () => {
 
   it('filters tasks based on completed filter', () => {
     cy.contains('.v-chip', 'Completed').click();
+
     cy.contains('.task-list', 'Completed',).should('exist');
+
     cy.contains('.task-list', 'Active').should('not.exist');
   });
 
