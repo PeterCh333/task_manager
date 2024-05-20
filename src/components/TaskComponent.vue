@@ -4,7 +4,7 @@ import { useTaskStore } from '@/stores/task.store';
 import type { Task } from '@/types/model.types';
 
 const props = defineProps<{
-  task: Task | null; // Define task prop as Task or null
+  task: Task | null;
 }>();
 
 const store = useTaskStore();
@@ -23,21 +23,21 @@ const formatDateTime = (dateTime: string) => {
   });
 };
 
-const markTaskAsCompleted = (task: Task) => {
+function markTaskAsCompleted(task: Task) {
   task.status = 'Completed';
   store.updateTask(task);
-};
+}
 
-const activateTask = (task: Task) => {
+function activateTask(task: Task) {
   task.status = 'Active';
   store.updateTask(task);
-};
-const editTask = () => {
-  if (props.task) {
-    console.log('Editing task:', props.task.id);
+}
 
-  }
-};
+//Vieme komponent sa nezobrazí ak nemáme task takže nemôže byť null čiže môžeme použiť !
+async function deleteTask() {
+  await store.removeTask(props.task!.id);
+  await store.selectTask()
+}
 
 </script>
 
@@ -57,9 +57,7 @@ const editTask = () => {
 
       <v-btn v-if="props.task.status === 'Active'" color="primary" @click="markTaskAsCompleted(props.task)">mark as complete</v-btn>
       <v-btn v-else color="primary" @click="activateTask(props.task);">mark as active</v-btn>
-
-      <v-btn color="error" @click="store.removeTask(props.task.id); store.selectTask()">Delete</v-btn>
-
+      <v-btn color="error" @click="deleteTask">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>

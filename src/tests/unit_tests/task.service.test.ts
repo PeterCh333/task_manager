@@ -1,33 +1,25 @@
-import { createTask, listTasks, updateTask, deleteTask, getTask } from '@/services/task.service'
+import { createTask, listTasks, updateTask, deleteTask } from '@/services/task.service'
 import { describe, it, expect } from 'vitest';
 import type { Task } from '@/types/model.types'
 
 describe('Task Service', () => {
-  const testTask = {
+  const testTaskPayload = {
     createdAt: "2024-05-14T00:33:58.139Z",
     updatedAt: "2024-05-13T18:48:50.762Z",
     deadline: "2024-10-09T18:15:38.749Z",
-    description: "Illo important quisquam adipisci atque earum. Totam sequi temporibus. Quis veritatis error exercitationem quo quibusdam.",
+    description: "This is a new task description",
     status: 'active',
-    assignedToTask: [],
-    title: "Bug fixes",
+    title: "Test task",
     createdByUserId: "1",
-    id: '1'
+    id: ''
   };
 
   it('creates a task', async () => {
-    const newTask = await createTask(testTask);
-    expect(newTask.title).toBe(testTask.title);
-    expect(newTask.description).toBe(testTask.description);
+    const newTask = await createTask(testTaskPayload);
+    testTaskPayload.id = newTask.id;
+    expect(newTask.title).toBe(testTaskPayload.title);
+    expect(newTask.description).toBe(testTaskPayload.description);
   });
-
-  it('gets a tasks', async () => {
-    const task = await getTask(testTask.id);
-    expect(task).not.toBeNull();
-    if (task !== null) {
-      expect(task.id).toEqual(testTask.id);
-    }
-  })
 
   it('should fetch all tasks when no filter is provided', async () => {
     const result = await listTasks();
@@ -43,21 +35,20 @@ describe('Task Service', () => {
   });
 
   it('should fetch tasks that match a search query', async () => {
-    const result = await listTasks(undefined, 'Bug');
+    const result = await listTasks(undefined, 'Test task');
 
     expect(Array.isArray(result)).toBeTruthy();
-    expect(result.some(task => task.title.includes('Bug'))).toBe(true);
+    expect(result.some(task => task.title.includes('Test task'))).toBe(true);
   });
 
   it('updates a task', async () => {
-    const updatedTaskData = { ...testTask, title: "Updated Task Title" };
+    const updatedTaskData = { ...testTaskPayload, title: "Updated Task Title" };
     const updatedTask = await updateTask(updatedTaskData) as Task;
     expect(updatedTask.title).toBe(updatedTaskData.title);
   });
 
   it('deletes a task', async () => {
-    const deletedTask = await deleteTask(testTask.id);
-
+    const deletedTask = await deleteTask(testTaskPayload.id);
     expect(deletedTask).toBeDefined();
   });
 });

@@ -5,12 +5,6 @@ export async function createTask(taskData: Task): Promise<Task> {
   const response = await axiosInstance.post('/tasks', taskData);
   return response.data;
 }
-
-export async function getTask(id: string): Promise<Task | null> {
-  const response = await axiosInstance.get(`/tasks/${id}`);
-  return response.data;
-}
-
 export async function listTasks(filter?: string, search?: string): Promise<Task[]> {
   const url = new URL('/tasks', 'https://664250c33d66a67b34370073.mockapi.io/');
 

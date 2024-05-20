@@ -10,7 +10,6 @@ export interface Task extends BaseModel {
   deadline: string;
   status: string,
   createdByUserId: string
-
 }
 
 export interface User extends BaseModel {

@@ -1,25 +1,12 @@
-import { defineStore } from 'pinia';
-import type { Task } from 'src/types/model.types';
-import {
-  createTask,
-  listTasks,
-  updateTask,
-  deleteTask
-} from '@/services/task.service';
+import { defineStore } from 'pinia'
+import type { Task } from 'src/types/model.types'
+import { createTask, deleteTask, listTasks, updateTask } from '@/services/task.service'
 
 export const useTaskStore = defineStore('task', {
   state: () => ({
     tasks: [] as Task[],
     selectedTask: null as Task | null,
   }),
-  getters: {
-    getTasks(state) {
-      return state.tasks;
-    },
-    getSelectedTask(state) {
-      return state.selectedTask;
-    }
-  },
   actions: {
     async selectTask(id?: string) {
       if (id) {
@@ -37,23 +24,12 @@ export const useTaskStore = defineStore('task', {
     },
 
     async createTask(task: Task) {
-      await createTask(task);
-      this.tasks.push(task);
-    },
-
-    async getTask(task: Task) {
-      const index = this.tasks.findIndex(t => t.id === task.id);
-      if (index !== -1) {
-        return this.tasks[index];
-      } else {
-        return null;
-      }
+      this.tasks.push(await createTask(task));
     },
 
     async fetchTasks(filter?: string, search?: string) {
       try {
-        const tasks = await listTasks(filter, search);
-        this.tasks = tasks;
+        this.tasks = await listTasks(filter, search);
       } catch (error: any) {
         if (error.response && error.response.status === 404) {
           this.tasks = [];

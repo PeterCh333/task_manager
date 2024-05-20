@@ -10,7 +10,7 @@
 
     <v-list lines="one" class="task-list">
       <TaskListItem
-        v-for="task in store.getTasks"
+        v-for="task in store.tasks"
         :key="task.id"
         :id="task.id"
         :task="task"
@@ -67,7 +67,7 @@ watch(selectedFilter, () => {
 
 <style scoped>
 .task-list-container {
-  height: 800px;
+  height: 700px;
   overflow-y: auto;
   min-width: 360px;
 }

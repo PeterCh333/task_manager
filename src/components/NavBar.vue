@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <v-app-bar class="bg-blue-darken-4" :elevation="2">
+  <v-app-bar class="bg-blue-darken-4 position-relative" :elevation="2">
     <template v-slot:prepend>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </template>
